@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<link rel="stylesheet" href="index.css">
+<h1>WHAT WE TALK ABOUT WHEN WE TALK ABOUT COFFEE</h1>
+<center><h2><i>Making sense of thousands of coffee reviews</i></h2></center>
+<p>When it comes to wine, I’m certainly not an expert, but I can tell you what I like. If I want a red wine, I go with Cabernet Sauvignon (or maybe Malbec), and if I want a white wine, I usually grab a Sauvignon Blanc. I know the general characteristics of these varieties, and could take an educated guess at what the tasting notes will be for each.
+<pBut I don’t drink wine every morning. I drink coffee, and so do most of us at Datascope, along with millions of caffeine-loving junkies around the world.
+<p>If I drink coffee every morning, why is it that I can’t tell you what type of coffee I like in the same way I can with wine? I don’t mean the coffee brand, but the categories that affect the flavor, like roast or region. It’d be nice to know that I generally prefer coffee from Central America or from Africa, or that I should always stick with a medium-light roast.
+<p>So I had an idea. What if I could look at thousands of coffee reviews, filter out the coffee lingo that no one understands, and see if there’s a pattern of flavors by region or roast?
+<p>So I did. Here’s what I found.
+
+<h2>What words describe different types of coffee?</h2>
+<h3><i>'Mouthfeel', 'flowers', and 'chocolate' are used in over 50% of the reviews.</i></h3>
+<p>I analyzed over 2,000 online coffee reviews written by coffee experts[1]. The first thing I noticed was how often the same uncommon words were used. Of course words like ‘and’, ‘the’, and ‘but’ were used a lot, but surprisingly so were ‘sweet’ (1663 occurrences), ‘chocolate’ (1632 occurrences), and ‘fruit’ (1009 occurrences). Below are the 50 most common words in the coffee reviews.
+<hr/>
+<h4>Top 50 Common Words in 2,019 Coffee Reviews</h4>
+<div id="bubbles"></div>
+<hr/>
+<p>If chocolate is used so often, it probably isn't a good word to distinguish types of coffee from each other. At first glance, it looked like it might not be possible to find descriptive words that were unique among different types of coffee.
+
+<h2>Finding words that matter</h2>
+<p>I wanted to find the words that were unique to a category and significant, and rank them based on those factors.
+<p>I developed a way to score each word in each category. This methodology gives weight to words that are found more in the reviews of specific categories than in reviews overall (uniqueness) and adds weight to words that are used more often (significance) [2].
+
+<h2>Making it easy for humans to understand</h2>
+<p>After scoring each word in each category, I came up with a list of good descriptors by category. But some of these words, like ‘deep’ and ‘musty’, still didn’t seem like flavors I could relate to.
+<p>To make it easy for humans to understand what flavors they can expect by category, we selected the top 10 words in each category that people can relate to, like common foods and plants. We then split those flavors into six categories - carbony, sugary, nutty, woody, fruity, and flowery - to compare flavor profiles by category.
+<p>And ta-da! Here's the list of words by roasts and regions that anyone can relate to.
+<hr/>
+<h4>Coffee Flavors by Roast</h4>
+<div id="roast-container"></div>
+<hr/>
+<h4>Coffee Flavors by Region</h4>
+<div id="region-container"></div>
+<hr/>
+
+<p>[1] We looked at 2,019 coffee reviews from <a href="http://coffeereview.com">CoffeeReview.com</a>
+<p>[2] We calculated the score for each word in each category using this equation:
+<p>score = log(word count in big bag) * (word count in category bag + prior) / (word count in category bag + prior * word count of unique words in big bag) / (word count in big bag + prior) / (word count in big bag + prior * word count of unique words in big bag)
+<p>big bag = count of all words in our coffee review descriptions
+<br>category bag = count of all words in descriptions of coffee reviews in that category (region or roast)
+<br>prior = used a prior of 1 to prevent overfitting on small samples of data
+
+<p>The first part of this equation adds weight to a word that shows up a lot in coffee reviews (or is significant) and the second part of the equation determines whether the a word shows up more often on average in one category than in all reviews (or is unique to that category).
+
+<p>Example: Find the score for the word ‘wood’ in the region Africa.
+<p>There are 50,000 total words in all descriptions, with 15,000 unique words. There are 1,500 words in all descriptions in the Africa region. The word ‘wood’ is used 30 times in all descriptions and 15 times in descriptions in the Africa region.
+<p>6.5 = log(30) x (15 + 1)/(1500 + 15,000) / (30 + 1)/(50,000 + 15,000)
+
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="roasts.js"></script>
+<script src="regions.js"></script>
+<script src="bubbles.js"></script>
+
+</html>
