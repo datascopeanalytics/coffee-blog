@@ -1,6 +1,6 @@
-var diameter = 475,
-format = d3.format(",d"),
-color = d3.scale.ordinal().range(['#ffa500','#d77306','#ae3e12','#800000']);
+var diameter = 475;
+var format = d3.format(",d");
+var bubblecolor = d3.scale.ordinal().range(['#ffa500','#d77306','#ae3e12','#800000']);
 
 var bubble = d3.layout.pack()
 .sort(null)
@@ -17,7 +17,7 @@ d3.json("top_50_words.json", function(error, root) {
   var node = svg.selectAll(".node")
   .data(bubble.nodes(classes(root))
   .filter(function(d) { return !d.children; }))
-  .enter().append("g")
+      .enter().append("g")
   .attr("class", "node")
   .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
@@ -26,7 +26,7 @@ d3.json("top_50_words.json", function(error, root) {
 
   node.append("circle")
   .attr("r", function(d) { return d.r; })
-  .style("fill", function(d) { return color(d.packageName); });
+  .style("fill", function(d) { return bubblecolor(d.packageName); });
 
   node.append("text")
   .attr("dy", ".3em")
